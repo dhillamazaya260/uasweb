@@ -7,7 +7,7 @@ include "koneksi.php";
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Lunar Universe</title>
-        <link rel="icon" href="img/l2.png"/>
+        <link rel="icon" href="images/007.png"/>
         <link 
           rel="stylesheet" 
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
@@ -95,12 +95,6 @@ include "koneksi.php";
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#gallery">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                         <a class="nav-link" href="admin.php?page=dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin.php?page=article">Article</a>
                     </li>
                     <li class="nav-item">
                         <input type="checkbox" class="checkbox" id="checkbox">
@@ -292,21 +286,29 @@ include "koneksi.php";
                 <h1 class="fw-bold display-4 pb-3" id="gallery">gallery</h1>
                 <div id="carouselExample" class="carousel slide">
                   <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img src="images/Desain tanpa judul (96).png" class="d-block w-100" alt="gallery1">
-                    </div>
-                    <div class="carousel-item">
-                      <img src="images/pink skincare 🎀.jpg" class="d-block w-100" alt="gallery2">
-                    </div>
-                    <div class="carousel-item">
-                      <img src="images/Pinterest _ Love Ems ✨.jpg" class="d-block w-100" alt="gallery3">
-                    </div>
-                    <div class="carousel-item">
-                      <img src="images/Fruits 🍓🍌🥝🍇.jpeg" class="d-block w-100" alt="gallery4">
-                    </div>
-                    <div class="carousel-item">
-                      <img src="images/wonyoung wonyoungism lifestyle Korean Japanese….jpg" class="d-block w-100" alt="gallery5">
-                    </div>
+                  <?php
+                        // Ambil data gambar dari database
+                        $sql = "SELECT * FROM gallery ORDER BY tanggal DESC"; 
+                        $hasil = $conn->query($sql); 
+
+                        // Cek apakah ada gambar
+                        $isActive = true; // Untuk menandai item pertama sebagai 'active'
+                        while($row = $hasil->fetch_assoc()){
+                            // Mendapatkan nama gambar dari kolom 'gambar'
+                            $imageSrc = "images/" . $row['gambar']; // Asumsi gambar disimpan di folder 'img/'
+
+                            // Menampilkan gambar di carousel
+                            if ($isActive) {
+                                // Set item pertama sebagai active
+                                echo '<div class="carousel-item active">';
+                                $isActive = false;
+                            } else {
+                                echo '<div class="carousel-item">';
+                            }
+                            echo '<img src="' . $imageSrc . '" class="d-block w-100" alt="gallery image">';
+                            echo '</div>';
+                        }
+                        ?>
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
