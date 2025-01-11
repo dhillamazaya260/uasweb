@@ -116,7 +116,7 @@
             </table>
 
 <?php 
-$sql1 = "SELECT * FROM gallery";
+$sql2 = "SELECT * FROM gallery";
 $hasil2 = $conn->query($sql2); 
 $total_records = $hasil2->num_rows;
 ?>
